@@ -7,8 +7,14 @@ import Header from '../Header/Header';
 import ListPictures from '../ListPictures/ListPictures';
 import Loader from '../Loader/Loader';
 import Close from '../Close/Close';
+import { useLocation, useNavigate } from 'react-router-dom';
+const queryString = require('query-string');
 
 function App() {
+  // Parse from browser address line
+  const locationUrl = useLocation()
+  const locationSearch = queryString.parse(locationUrl.search)
+
   // Massives
   const [list, setList] = useState([])
   const [preOut, setPreOut] = useState([])
@@ -21,35 +27,44 @@ function App() {
   const [locations, setLocations] = useState([])
 
   // Filters
-  const [name, setName] = useState('')
-  const [author, setAuthor] = useState(SYSTEM_AUTHOR_VAR)
-  const [location, setLocation] = useState('Location')
-  const [page, setPage] = useState(1)
-  const [from, setFrom] = useState('')
-  const [before, setBefore] = useState('')
+  const [name, setName] = useState(locationSearch.name || '')
+  const [author, setAuthor] = useState(locationSearch.author || SYSTEM_AUTHOR_VAR)
+  const [location, setLocation] = useState(locationSearch.location || 'Location')
+  const [page, setPage] = useState(locationSearch.page || 1)
+  const [from, setFrom] = useState(locationSearch.created ? locationSearch.created.split('-')[0] : '')
+  const [before, setBefore] = useState(locationSearch.created ? locationSearch.created.split('-')[1] : '')
 
   // Aux Vars
   const createdRange = useRef(null)
   const darkReverse = theme === 'dark' ? 'white' : 'dark'
   const isDarkBool = theme === 'dark' ? true : false
 
+  const navigate = useNavigate()
+
   const changeTheme = () => {
     setTheme(darkReverse)
   }
   const applyFilters = () => {
+    let outUrl = `?page=${page}`
     let updatedList = list;
+
     if (name) {
+      outUrl += `&name=${name.toLocaleLowerCase()}`
       updatedList = updatedList.filter(item => item.name.toLowerCase().search(name.toLocaleLowerCase().trim()) !== - 1)
     }
     if (author !== SYSTEM_AUTHOR_VAR) {
+      outUrl += `&author=${author.toLocaleLowerCase()}`
       updatedList = updatedList.filter(item => item.authorName.toLowerCase().search(author.toLocaleLowerCase().trim()) !== - 1)
     }
     if (location !== SYSTEM_LOCATION_VAR) {
+      outUrl += `&location=${location.toLocaleLowerCase()}`
       updatedList = updatedList.filter(item => item.locationName.toLowerCase().search(location.toLocaleLowerCase().trim()) !== - 1)
     }
     if (before !== '' && from !== '') {
+      outUrl += `&created=${from}-${before}`
       const numFrom = parseInt(from)
       const numBefore = parseInt(before)
+
       if (numBefore > numFrom) {
         updatedList = updatedList.filter(item => {
           return item.created >= numFrom && item.created <= numBefore
@@ -64,6 +79,7 @@ function App() {
     }
     setPreOut(preOut)
     setOut(updatedList);
+    navigate(outUrl)
   }
 
   // Fetch paintings, locations, authors, merge into one object 
@@ -118,7 +134,10 @@ function App() {
             <div className='relative'>
               <Input
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value)
+                  setPage(1)
+                }}
                 placeholder='Name'
                 isDarkTheme={isDarkBool}
               >
@@ -135,7 +154,10 @@ function App() {
                 value={author}
                 options={authors}
                 isDarkTheme={isDarkBool}
-                onChange={(name) => setAuthor(name)}
+                onChange={(name) => {
+                  setAuthor(name)
+                  setPage(1)
+                }}
               >
               </Select>
               {
@@ -151,7 +173,10 @@ function App() {
                 value={location}
                 options={locations}
                 isDarkTheme={isDarkBool}
-                onChange={(n) => setLocation(n)}
+                onChange={(n) => {
+                  setLocation(n)
+                  setPage(1)
+                }}
               >
               </Select>
               {
@@ -172,7 +197,10 @@ function App() {
                   className='Range__Input Range__Input--white'
                   placeholder='from'
                   isDarkTheme={isDarkBool}
-                  onBlur={(e) => setFrom(e.target.value)}
+                  onBlur={(e) => {
+                    setFrom(e.target.value)
+                    setPage(1)
+                  }}
                   min={0}
                   defaultValue={from}
                 >
@@ -184,7 +212,10 @@ function App() {
                   className='Range__Input Range__Input--white'
                   placeholder='before'
                   isDarkTheme={isDarkBool}
-                  onChange={(e) => setBefore(e.target.value)}
+                  onChange={(e) => {
+                    setBefore(e.target.value)
+                    setPage(1)
+                  }}
                   max={parseInt(new Date().getFullYear())}
                   defaultValue={before}
                   on
