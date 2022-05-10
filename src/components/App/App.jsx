@@ -30,11 +30,11 @@ function App() {
 
   // Aux Vars
   const createdRange = useRef(null)
-  const isDarkReverse = theme === 'dark' ? 'white' : 'dark'
+  const darkReverse = theme === 'dark' ? 'white' : 'dark'
   const isDarkBool = theme === 'dark' ? true : false
 
   const changeTheme = () => {
-    setTheme(isDarkReverse)
+    setTheme(darkReverse)
   }
   const applyFilters = () => {
     let updatedList = list;
@@ -93,7 +93,7 @@ function App() {
       setLocations(remadeLocations)
       setList(summaryList)
 
-      delay(1000)
+      delay(800)
         .then(() => setLoading(false))
     }
     fetchPictures()

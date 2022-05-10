@@ -1,5 +1,7 @@
 import React from 'react'
 import { mainUrl } from '../../utils/api'
+import placeholderImg from '../../assets/placeholderImg.jpg'
+
 export const ListPictures = ({ list }) => {
   if (list.length === 0) {
     return <h1>No paintings</h1>
@@ -21,6 +23,11 @@ export const ListPictures = ({ list }) => {
               className="Paintings__picture"
               src={imageUrl}
               alt={name}
+              height={275}
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null
+                currentTarget.src = placeholderImg
+              }}
             />
             <div className='Paintings__titleBlock'>
               <h4 className='Paintings__title'> {name} </h4>
