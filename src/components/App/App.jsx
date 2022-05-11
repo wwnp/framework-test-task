@@ -112,7 +112,7 @@ function App() {
       setLocations(remadeLocations)
       setList(summaryList)
 
-      delay(5000)
+      delay(600)
         .then(() => setLoading(false))
     }
     fetchPictures()

@@ -3,6 +3,8 @@ import { mainUrl } from '../../utils/api'
 import placeholderImg from '../../assets/images/placeholderImg.jpg'
 import './style.ListPictures.css'
 import { motion } from 'framer-motion';
+import { listVariants } from '../../utils/motion-anim';
+
 
 export const ListPictures = ({ list }) => {
   if (list.length === 0) {
@@ -17,7 +19,13 @@ export const ListPictures = ({ list }) => {
         const location = item?.location?.title ?? null
         const author = item?.authorName ?? null
         return (
-          <div
+          <motion.div
+            variants={listVariants}
+            initial='hidden'
+            animate='visible'
+            transition={{
+              duration: .25
+            }}
             className='paintings__item'
             key={index}
           >
@@ -38,7 +46,7 @@ export const ListPictures = ({ list }) => {
               {created_at && (<p>Created: <span>{created_at}</span></p>)}
               {location && (<p>Location: <span>{location}</span></p>)}
             </div>
-          </div>
+          </motion.div>
         )
       })}
     </div>
