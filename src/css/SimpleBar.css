@@ -21,6 +21,11 @@
 .Range__Input {
   width: 100%;
   color: #000;
+  height: 45px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .Range__Input--white {
