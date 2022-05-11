@@ -2,13 +2,14 @@ import React, { useEffect } from 'react'
 import brand from '../../assets/images/brand.png'
 import blackSun from '../../assets/images/blackSun.png'
 import whiteSun from '../../assets/images/whiteSun.png'
+import './style.Header.css'
 
 const Header = ({ changeTheme, theme }) => {
   useEffect(() => {
     document.body.setAttribute('data-theme', theme)
   }, [theme])
   return (
-    <div className='Header'>
+    <div className='header'>
       <div className='pointer'>
         <img src={brand} width={64} height={64} alt="123" />
       </div>

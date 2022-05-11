@@ -1,4 +1,4 @@
-import { Select, Input, Range, Pagination } from 'fwt-internship-uikit'
+import { Pagination } from 'fwt-internship-uikit'
 import { useEffect, useRef, useState } from 'react'
 import { apiFetch, delay } from '../../utils/api';
 import { replaceTitleByRef } from '../../utils/auxiliary';
@@ -6,8 +6,9 @@ import { PICS_FOR_PAGE, SYSTEM_AUTHOR_VAR, SYSTEM_LOCATION_VAR } from '../../uti
 import Header from '../Header/Header';
 import ListPictures from '../ListPictures/ListPictures';
 import Loader from '../Loader/Loader';
-import Close from '../Close/Close';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Filter from '../Filter/Filter';
+import './style.App.css'
 const queryString = require('query-string');
 
 function App() {
@@ -132,110 +133,24 @@ function App() {
       <div className="wrapper">
         <main>
           <Header changeTheme={changeTheme} theme={theme}></Header>
-          <div className="Painting__group">
-            <div className='relative'>
-              <Input
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value)
-                  setPage(1)
-                }}
-                placeholder='Name'
-                isDarkTheme={isDarkBool}
-              >
-              </Input>
-              {
-                name !== ''
-                  ? <Close onClick={() => setName('')}></Close>
-                  : null
-              }
-            </div>
-
-            <div className='relative'>
-              <Select
-                value={author}
-                options={authors}
-                isDarkTheme={isDarkBool}
-                onChange={(name) => {
-                  setAuthor(name)
-                  setPage(1)
-                }}
-              >
-              </Select>
-              {
-                author !== SYSTEM_AUTHOR_VAR
-                  ? <Close onClick={() => setAuthor(SYSTEM_AUTHOR_VAR)}></Close>
-                  : null
-              }
-
-            </div>
-
-            <div className='relative'>
-              <Select
-                value={location}
-                options={locations}
-                isDarkTheme={isDarkBool}
-                onChange={(n) => {
-                  setLocation(n)
-                  setPage(1)
-                }}
-              >
-              </Select>
-              {
-                location !== SYSTEM_LOCATION_VAR
-                  ? <Close onClick={() => setLocation(SYSTEM_LOCATION_VAR)}></Close>
-                  : null
-              }
-            </div>
-
-
-            <div className='relative' ref={createdRange} >
-              <Range
-                isDarkTheme={isDarkBool}
-                onClose={Function.prototype}
-              >
-                <Input
-                  type={'number'}
-                  className='Range__Input Range__Input--white'
-                  placeholder='from'
-                  isDarkTheme={isDarkBool}
-                  onBlur={(e) => {
-                    setFrom(e.target.value)
-                    setPage(1)
-                  }}
-                  min={0}
-                  defaultValue={from}
-                >
-
-                </Input>
-                <span className='Painting__delimiter'>-</span>
-                <Input
-                  type={'number'}
-                  className='Range__Input Range__Input--white'
-                  placeholder='before'
-                  isDarkTheme={isDarkBool}
-                  onChange={(e) => {
-                    setBefore(e.target.value)
-                    setPage(1)
-                  }}
-                  max={parseInt(new Date().getFullYear())}
-                  defaultValue={before}
-                  on
-                >
-                </Input>
-              </Range>
-              {
-                before !== '' && from !== ''
-                  ? <Close onClick={() => {
-                    setFrom('')
-                    setBefore('')
-                  }}></Close>
-                  : null
-              }
-
-            </div>
-
-          </div>
+          <Filter
+            name={name}
+            setName={setName}
+            setPage={setPage}
+            isDarkBool={isDarkBool}
+            author={author}
+            setAuthor={setAuthor}
+            authors={authors}
+            location={location}
+            locations={locations}
+            setLocation={setLocation}
+            createdRange={createdRange}
+            setFrom={setFrom}
+            from={from}
+            before={before}
+            setBefore={setBefore}
+          >
+          </Filter>
           {
             loading
               ? <Loader color={theme}></Loader>
@@ -245,7 +160,7 @@ function App() {
           }
         </main>
         <div className="footer">
-          <div className='Pictures__Pagination'>
+          <div className='footer__Pagination'>
             <Pagination
               isDarkTheme={isDarkBool}
               pagesAmount={Math.ceil(preOut.length / PICS_FOR_PAGE)}

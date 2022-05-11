@@ -1,4 +1,5 @@
 import React from 'react'
+import './style.Loader.css'
 
 const Loader = ({ color = 'forDark' }) => {
   return (

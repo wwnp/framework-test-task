@@ -1,0 +1,23 @@
+.filter__group {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding-top: 35px;
+  padding-bottom: 45px;
+  column-gap: 20px;
+}
+
+@media screen and (max-width:320px) {
+  .filter__group {
+    grid-template-columns: 1fr;
+    row-gap: 15px;
+  }
+}
+
+.filter__item {
+  position: relative;
+}
+
+.painting__delimiter {
+  padding: 10px 10px;
+  font-size: 1.3rem;
+}

@@ -1,0 +1,106 @@
+.paintings {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 10px;
+  row-gap: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .paintings {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .paintings {
+    grid-template-columns: 1fr;
+  }
+}
+
+.paintings__item {
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 205px;
+}
+
+.paintings__picture {
+  width: 100%;
+  height: 275px;
+  border-radius: 20px;
+}
+
+@media screen and (max-width:1040px) {
+  .paintings__picture {
+    height: 230px
+  }
+}
+
+@media screen and (max-width:768px) {
+  .paintings__picture {
+    height: 249px
+  }
+}
+
+@media screen and (max-width:320px) {
+  .paintings__picture {
+    height: 205px
+  }
+}
+
+.paintings__titleBlock p {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 20px;
+  padding-bottom: 5px;
+}
+
+.paintings__titleBlock p span {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.paintings__title {
+  font-size: 18px;
+  font-family: 'Roboto';
+  font-weight: 700;
+  line-height: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+@media screen and (max-width:1024px) {
+  .paintings__title {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width:768px) {
+  .paintings__title {
+    font-size: 13px;
+  }
+}
+
+.paintings__titleBlock {
+  padding-left: 15px;
+  position: absolute;
+  bottom: -124px;
+  left: 0;
+  background: rgba(255, 255, 255, 0.75);
+  color: #000;
+  width: 100%;
+  height: 154px;
+  transition: transform .2s;
+}
+
+.paintings__titleBlock:hover {
+  cursor: pointer;
+  transform: translateY(-95px);
+}

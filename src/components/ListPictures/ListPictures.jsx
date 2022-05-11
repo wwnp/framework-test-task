@@ -1,13 +1,14 @@
 import React from 'react'
 import { mainUrl } from '../../utils/api'
-import placeholderImg from '../../assets/placeholderImg.jpg'
+import placeholderImg from '../../assets/images/placeholderImg.jpg'
+import './style.ListPictures.css'
 
 export const ListPictures = ({ list }) => {
   if (list.length === 0) {
     return <h1>No paintings</h1>
   }
   return (
-    <div className="Paintings__grid">
+    <div className="paintings">
       {list.map((item, index) => {
         const imageUrl = mainUrl + item?.imageUrl
         const name = item?.name ?? null
@@ -16,11 +17,11 @@ export const ListPictures = ({ list }) => {
         const author = item?.authorName ?? null
         return (
           <div
-            className='Paintings__wrapper'
+            className='paintings__item'
             key={index}
           >
             <img
-              className="Paintings__picture"
+              className="paintings__picture"
               src={imageUrl}
               alt={name}
               height={275}
@@ -29,8 +30,8 @@ export const ListPictures = ({ list }) => {
                 currentTarget.src = placeholderImg
               }}
             />
-            <div className='Paintings__titleBlock'>
-              <h4 className='Paintings__title'> {name} </h4>
+            <div className='paintings__titleBlock'>
+              <h4 className='paintings__title'> {name} </h4>
               {author && (<p>Author: <span>{author}</span></p>)}
               {name && (<p>Name: <span>{name}</span></p>)}
               {created_at && (<p>Created: <span>{created_at}</span></p>)}

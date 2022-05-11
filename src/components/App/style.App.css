@@ -1,0 +1,21 @@
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.footer {
+  margin-top: auto;
+}
+
+.footer__Pagination {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
