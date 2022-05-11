@@ -2,6 +2,7 @@ import React from 'react'
 import { mainUrl } from '../../utils/api'
 import placeholderImg from '../../assets/images/placeholderImg.jpg'
 import './style.ListPictures.css'
+import { motion } from 'framer-motion';
 
 export const ListPictures = ({ list }) => {
   if (list.length === 0) {
