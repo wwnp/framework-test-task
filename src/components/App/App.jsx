@@ -44,13 +44,16 @@ function App() {
   const changeTheme = () => {
     setTheme(darkReverse)
   }
+
   const applyFilters = () => {
     let outUrl = `?page=${page}`
     let updatedList = list;
 
     if (name) {
       outUrl += `&name=${name.toLocaleLowerCase()}`
-      updatedList = updatedList.filter(item => item.name.toLowerCase().search(name.toLocaleLowerCase().trim()) !== - 1)
+      updatedList = updatedList.filter(item => {
+        return item.name.toLowerCase().search(name.toLocaleLowerCase().trim()) !== - 1
+      })
     }
     if (author !== SYSTEM_AUTHOR_VAR) {
       outUrl += `&author=${author.toLocaleLowerCase()}`
@@ -64,7 +67,6 @@ function App() {
       outUrl += `&created=${from}-${before}`
       const numFrom = parseInt(from)
       const numBefore = parseInt(before)
-
       if (numBefore > numFrom) {
         updatedList = updatedList.filter(item => {
           return item.created >= numFrom && item.created <= numBefore
